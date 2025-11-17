@@ -20,11 +20,15 @@ function App() {
 // 시계
 const Clock = () => {
   const [time, setTime] = useState(new Date());
-
+  const intervalRef = useRef(null);
   useEffect(() => {
-    setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setTime(new Date());
     }, 1000);
+
+    return () => {
+      clearInterval(intervalRef.current);
+    };
   }, []);
   return <div className="card clock">{time.toLocaleTimeString()}</div>;
 };
