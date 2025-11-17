@@ -11,6 +11,10 @@ function App() {
   const { data, loading, setData, error } = useFetch(
     "http://localhost:3000/todo"
   );
+  const [todo, setTodo] = useState([]);
+  useEffect(() => {
+    if (data) setTodo(data);
+  }, [data]);
   return (
     <>
       {loading && <p>불러오는 중...</p>}
@@ -18,8 +22,8 @@ function App() {
       <Advice />
       <Clock />
       <StopWatch />
-      <TodoInput setTodo={setData} />
-      <TodoList todo={data} setTodo={setData} />
+      <TodoInput setTodo={setTodo} />
+      <TodoList todo={todo} setTodo={setTodo} />
     </>
   );
 }

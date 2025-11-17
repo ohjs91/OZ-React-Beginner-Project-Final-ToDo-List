@@ -1,6 +1,6 @@
 import { useRef } from "react";
 // 할일 추가
-export default function TodoList({ setTodo }) {
+export default function TodoInput({ setTodo }) {
   const inputValue = useRef(null);
   const addTodo = async () => {
     if (inputValue.current.value.length <= 0) {
