@@ -2,31 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [todo, setTodo] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/todo");
-        if (!response.ok) {
-          throw new Error(`HTTP 오류: ${response.status}`);
-        }
-        const result = await response.json();
-        setTodo(result);
-      } catch (err) {
-        console.error("error : ", err);
-      } finally {
-        console.log("todo data list 불러오기 완료");
-      }
-    };
-    fetchData();
-  }, []);
+  const { data, loading, setData, error } = useFetch(
+    "http://localhost:3000/todo"
+  );
   return (
     <>
+      {loading && <p>불러오는 중...</p>}
+      {error && <p>에러발생!! 에러발생!!</p>}
       <Advice />
       <Clock />
       <StopWatch />
-      <TodoInput setTodo={setTodo} />
-      <TodoList todo={todo} setTodo={setTodo} />
+      <TodoInput setTodo={setData} />
+      <TodoList todo={data} setTodo={setData} />
     </>
   );
 }
@@ -90,29 +77,15 @@ const StopWatch = () => {
 
 // 오늘의 명언
 const Advice = () => {
-  const [data, setData] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://korean-advice-open-api.vercel.app/api/advice"
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP 오류: ${response.status}`);
-        }
-        const result = await response.json();
-        setData(result);
-      } catch (err) {
-        console.error("error : ", err);
-      } finally {
-        console.log("오늘의 명언 불러오기 완료");
-      }
-    };
-    fetchData();
-  }, []);
+  const { data, loading, error } = useFetch(
+    "https://korean-advice-open-api.vercel.app/api/advice"
+  );
+
   return (
     <div className="card advice_wrap">
       <h2>오늘의 명언</h2>
+      {loading && <p>불러오는 중...</p>}
+      {error && <p>에러발생!! 에러발생!!</p>}
       <p>
         <strong>{data?.author}</strong>
       </p>
@@ -137,6 +110,9 @@ const TodoInput = ({ setTodo }) => {
     try {
       const response = await fetch("http://localhost:3000/todo", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(newTodo),
       });
 
@@ -170,7 +146,7 @@ const TodoList = ({ todo, setTodo }) => {
   return (
     <div className="card todo_list_wrap">
       <ul>
-        {todo.map((item) => (
+        {todo?.map((item) => (
           <Todo key={item.id} item={item} setTodo={setTodo} />
         ))}
       </ul>
@@ -190,7 +166,7 @@ const Todo = ({ item, setTodo }) => {
       }
 
       setTodo((prev) => prev.filter((el) => el.id !== id));
-    } catch (error) {
+    } catch (err) {
       console.error("error : ", err);
     } finally {
       console.log("todo data 삭제 완료");
@@ -204,5 +180,35 @@ const Todo = ({ item, setTodo }) => {
       </button>
     </li>
   );
+};
+
+// 데이터 패치
+export const useFetch = (url) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error(`HTTP 오류: ${response.status}`);
+        }
+
+        const result = await response.json();
+        setData(result);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error, setData };
 };
 export default App;
