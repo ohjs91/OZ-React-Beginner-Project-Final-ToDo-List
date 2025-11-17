@@ -1,0 +1,177 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1e1e1e;
+  font-family: "Inter", sans-serif;
+  color: #e5e5e5;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
+/* 전체 컨테이너 */
+#root {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* 카드 공통 스타일 */
+.card {
+  background: #2a2a2a;
+  padding: 20px 24px;
+  margin-bottom: 22px;
+  border-radius: 14px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+.card:last-child {
+  margin-bottom: 0;
+}
+/* ----------------------------
+   오늘의 명언
+----------------------------- */
+.advice_wrap h2 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.advice_wrap p {
+  margin: 4px 0;
+  color: #bfbfbf;
+}
+
+/* ----------------------------
+   Clock
+----------------------------- */
+.clock {
+  font-size: 32px;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+/* ----------------------------
+   StopWatch
+----------------------------- */
+.stop_watch_wrap {
+  text-align: center;
+}
+
+.stop_watch_display {
+  font-size: 28px;
+  font-weight: bold;
+  padding: 14px 0;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  background: #2f2f2f;
+}
+
+.stop_watch_btn_wrap button {
+  margin: 0 6px;
+}
+
+/* ----------------------------
+   버튼 스타일
+----------------------------- */
+button {
+  background-color: #4b8bff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: #6ca1ff;
+}
+
+button:active {
+  background-color: #447ce0;
+}
+
+/* 삭제 버튼 */
+.delete_btn {
+  background: #ff4b4b;
+}
+
+.delete_btn:hover {
+  background: #ff6b6b;
+}
+
+/* ----------------------------
+   Todo Input
+----------------------------- */
+.todo_input_wrap {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.todo_input_wrap input {
+  flex: 1;
+  padding: 10px 12px;
+  background: #2f2f2f;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.todo_input_wrap input:focus {
+  outline: 2px solid #4b8bff;
+}
+
+.todo_input_wrap button {
+  white-space: nowrap;
+}
+
+/* ----------------------------
+   Todo List
+----------------------------- */
+.todo_list_wrap ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.todo_list_wrap li {
+  background: #2b2b2b;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo_list_wrap li button {
+  padding: 6px 12px;
+  font-size: 12px;
+  background: #ff4b4b;
+}
+
+.todo_list_wrap li button:hover {
+  background: #ff6b6b;
+}
+
+/* ----------------------------
+   반응형
+----------------------------- */
+@media (max-width: 480px) {
+  #root {
+    padding: 10px;
+  }
+
+  .clock {
+    font-size: 26px;
+  }
+
+  .stop_watch_display {
+    font-size: 24px;
+  }
+}
