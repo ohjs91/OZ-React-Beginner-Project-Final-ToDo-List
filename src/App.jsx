@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import TodoList from "./conponents/TodoList";
 import TodoInput from "./conponents/TodoInput";
@@ -8,9 +8,7 @@ import Advice from "./conponents/Advice";
 import useFetch from "./customHooks/useFetch";
 
 function App() {
-  const { data, loading, setData, error } = useFetch(
-    "http://localhost:3000/todo"
-  );
+  const { data, loading, error } = useFetch("http://localhost:3000/todo");
   const [todo, setTodo] = useState([]);
   useEffect(() => {
     if (data) setTodo(data);

@@ -1,7 +1,7 @@
 import useFetch from "../customHooks/useFetch.jsx";
 
 // 오늘의 명언
-export default function StopWatch() {
+export default function Advice() {
   const { data, loading, error } = useFetch(
     "https://korean-advice-open-api.vercel.app/api/advice"
   );
